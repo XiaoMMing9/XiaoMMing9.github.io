@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ming</title><meta name="author" content="ming"><meta name="copyright" content="ming"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="ming">
+<meta property="og:url" content="http://blog.ming9.top/index.html">
+<meta property="og:site_name" content="ming">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.ming9.top/img/favicon.jpg">
+<meta property="article:author" content="ming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.ming9.top/img/favicon.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="http://blog.ming9.top/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ming',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-12-08 10:06:33'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"  media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Casual/"><i class="fa-fw fa fa-pencil"></i><span> 随笔</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/index.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ming"><span class="site-name">ming</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Casual/"><i class="fa-fw fa fa-pencil"></i><span> 随笔</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">ming</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/XiaoMMing9" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/1544982906" target="_blank" title="Bilibili"><i class="fa-brands fa-bilibili" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/2023/12/06/%E7%BC%96%E5%86%99shellcode%E7%9A%84%E9%80%BB%E8%BE%91/" title="编写shellcode的逻辑"><img class="post-bg" src="/img/jian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编写shellcode的逻辑"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/12/06/%E7%BC%96%E5%86%99shellcode%E7%9A%84%E9%80%BB%E8%BE%91/" title="编写shellcode的逻辑">编写shellcode的逻辑</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-06T08:33:04.000Z" title="发表于 2023-12-06 16:33:04">2023-12-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a></span></div><div class="content">shellcode的实现逻辑摘要在c语言中我们使用的MessageBoxA函数，其实存放在User32.dll动态链接库中，它是一个windows API函数
+当c语言在链接时，它会将源文件中的代码、库函数等链接在一起，生成最终的可执行代码，形成可执行程序
+当程序运行时，操作系统会加载程序所需的动态链接库到内存中，而User32.dll中的MessageBoxA函数也被放在了内存中的一个位置，供给程序使用
+硬编码shellcode硬编码shellcode是直接通过地址调用相应API函数的一段16进制机器代码
+例如：User32.dll中的MessageBoxA函数的内存地址我们知道，直接使用，这就是硬编码
+先使用C语言编写一段弹窗程序，并修改visual stdio配置，能够让程序可以在xp的电脑上运行
+c语言弹窗#include &lt;Windows.h&gt;int main() &#123;	MessageBoxA(NULL, &quot;ming&quot;, &quot;test&quot;, MB_OK | MB_ICONINFORMATION);	return 0;&# ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/12/06/pwn/" title="Xctf--pwnstack"><img class="post-bg" src="/img/dong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Xctf--pwnstack"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/12/06/pwn/" title="Xctf--pwnstack">Xctf--pwnstack</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-06T07:47:26.000Z" title="发表于 2023-12-06 15:47:26">2023-12-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a></span></div><div class="content">攻防世界Pwnstack引言一直以来感觉pwn代表着高大上，现在就让我看看到底怎么个事儿？
+Pwnstackhttps://adworld.xctf.org.cn/challenges/list
+
+IDA反汇编程序ida反汇编一下程序
+
+熟悉逻辑双击main然后按下F5查看C语言代码
+可以发现这串代码的逻辑为：输出了一段字符串，然后执行vuln()函数
+
+跟进vuln()函数，发现存在read栈溢出漏洞函数
+
+寻找汇编代码的地址在汇编语言下按下空格键可以发现汇编代码的地址，找到vuln()函数位置，确认了调用read函数的地址为0x400756
+
+pwndbg调试程序gdb ./pwn2
+
+
+run运行程序，ctrl+c暂停
+
+输入vmmap查看程序运行的内存地址，红色的0x400000为程序运行的起始地址
+
+那么使用 b *0x40075B 在0x40075B处下断点，c继续执行程序，发现已经在断点处停了下来
+
+stack 50查看一下栈结构
+
+0x7fffffffe150存放着我们插入的数据
+ 0x7fffffffe1f8是接下来程序执行的地址
+我们需要做的是覆盖 0x7fffff ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/" title="红日靶场7"><img class="post-bg" src="/img/red.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="红日靶场7"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/" title="红日靶场7">红日靶场7</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-23T10:02:13.000Z" title="发表于 2023-11-23 18:02:13">2023-11-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></span></div><div class="content">红日靶场7流程goby扫描192.168.1.0/24网段，探测出192.168.1.4存在Laravel框架RCE以及Redis未授权漏洞，利用redis未授权获取了192.168.1.4(linux)的shell，信息收集发现192.168.1.4只是将192.168.52.20(linux)的web服务代理出来，通过CVE-2021-3129获取了192.168.52.20的web服务权限，发现这是由docker搭建的web服务，通过docker提权、逃逸获取了192.168.52.20的root权限，进行信息收集探测到192.168.93.0/24网段，使用了fscan发现192.168.93.0/24网段的3台机器都有ms-17010漏洞，192.168.93.20(windows)存在通达OA服务，利用通达OA漏洞获取了192.168.93.20的shell以及192.168.93.20(域控)和192.168.93.20的账户以及密码，利用ms17-010以及psexec获取了域控的shell
+
+192.168.1.4goby扫描192.168.1.4 发现 php La ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目"><img class="post-bg" src="/img/picture.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一次CTF逆向题目"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目">一次CTF逆向题目</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-11T01:17:09.000Z" title="发表于 2023-11-11 09:17:09">2023-11-11</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a></span></div><div class="content">一次CTF逆向题目IDA反编译反编译后的汇编语言代码
+; Attributes: bp-based frame; int __cdecl main(int argc, const char **argv, const char **envp)_main proc nearvar_6C= byte ptr -6Chvar_2C= dword ptr -2Chvar_28= dword ptr -28hvar_24= dword ptr -24hBuffer= byte ptr -20hargc= dword ptr  8argv= dword ptr  0Chenvp= dword ptr  10hpush    ebpmov     ebp, espsub     esp, 6Chpush    ebxpush    esipush    edilea     edi, [ebp+var_6C]mov     ecx, 1Bhmov     eax, 0CCCCCCCChrep stosdpush    20h ; &#x27; &#x27;       ; Sizepush    0 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/11/06/%E6%A0%85%E6%A0%8F%E5%8A%A0%E5%AF%86%E5%85%8D%E6%9D%80%E6%9C%A8%E9%A9%AC/" title="栅栏加密免杀木马"><img class="post-bg" src="/img/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="栅栏加密免杀木马"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/06/%E6%A0%85%E6%A0%8F%E5%8A%A0%E5%AF%86%E5%85%8D%E6%9D%80%E6%9C%A8%E9%A9%AC/" title="栅栏加密免杀木马">栅栏加密免杀木马</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-06T02:09:39.000Z" title="发表于 2023-11-06 10:09:39">2023-11-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%85%8D%E6%9D%80/">免杀</a></span></div><div class="content">栅栏加密免杀木马0x01思路以栅栏加密的方式拼接出assert敏感函数，使用函数提取出post请求的值，使用类方法形成assert($_POST[‘ming’]);的木马
+0x02栅栏加密栅栏密码(Rail-fence Cipher)就是把要加密的明文分成N个一组，然后把每组的第1个字符组合，每组第2个字符组合…每组的第N(最后一个分组可能不足N个)个字符组合，最后把他们全部连接起来就是密文。从本质上讲，栅栏密码是一种置换密码，即仅仅改变位置而不做替换。
+
+例如明文 iloveyou 长度8 可以使用的栅栏变量为2，3，4，5，6，7
+如果栅栏变量为2，那么2个为一组，可以分为4组：
+
+
+
+i
+o
+e
+o
+
+
+
+l
+v
+y
+u
+
+
+每组相同位数的字符组合，再相加，加密后的字符串为ioeolvyu
+以下是栅栏加密解密函数
+&lt;?phpfunction railFenceEncrypt($text,$rails)                //$text为明文，$rails为栅栏变量&#123;    $railFence = array_fill(0, $rails, array ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/11/05/%E5%93%A5%E6%96%AF%E6%8B%89v2-9-6%E6%9C%A8%E9%A9%AC%E5%88%86%E6%9E%90/" title="哥斯拉v2.9.6木马分析"><img class="post-bg" src="/img/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="哥斯拉v2.9.6木马分析"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/05/%E5%93%A5%E6%96%AF%E6%8B%89v2-9-6%E6%9C%A8%E9%A9%AC%E5%88%86%E6%9E%90/" title="哥斯拉v2.9.6木马分析">哥斯拉v2.9.6木马分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-05T09:47:04.000Z" title="发表于 2023-11-05 17:47:04">2023-11-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9C%A8%E9%A9%AC%E5%88%86%E6%9E%90/">木马分析</a></span></div><div class="content">0x01前言在学习内网渗透的过程中，发现github上的CVE-2021-3129-EXP形成的shell只允许让哥斯拉2.9.6版本连接，遂有了本次混淆木马的分析以及编写
+0x02哥斯拉v2.9.6木马分析源Exp
+https://github.com/SecPros-Team/laravel-CVE-2021-3129-EXP
+
+
+形成的木马&lt;?php  session_start();@set_time_limit(0);@error_reporting(0);function E($D,$K)&#123;    for($i= 0 ;$i&lt;strlen($D);$i++)&#123;        $D[$i]=$D[$i]^$K[$i+ 1 &amp; 15 ];    &#125;    return$D;             // E函数是异或加密&#125;function Q($D)&#123;    return base64_encode($D);&#125;                          // Q函数是base64加密函数fu ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/11/03/thinkphp5-rce/" title="thinkphp5任意代码执行分析"><img class="post-bg" src="/img/Sword.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="thinkphp5任意代码执行分析"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/03/thinkphp5-rce/" title="thinkphp5任意代码执行分析">thinkphp5任意代码执行分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-03T08:46:44.000Z" title="发表于 2023-11-03 16:46:44">2023-11-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a></span></div><div class="content">thinkphp5-rceRCE_Url：&#x2F;Index&#x2F;think\app&#x2F;invokefunction&amp;function&#x3D;call_user_func_array&amp;vars[0]&#x3D;phpinfo&amp;vars[1][ ]&#x3D;-1
+
+invokeFunction函数
+public static function invokeFunction($function, $vars = [])&#123;    $reflect = new \ReflectionFunction($function);    $args    = self::bindParams($reflect, $vars);    // 记录执行信息    //self::$debug &amp;&amp; Log::record(&#x27;[ RUN ] &#x27; . $reflect-&gt;__toString(), &#x27;info&#x27;);    return $reflect-&gt;invokeArgs($arg ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2023/11/03/thinkphp2-rce/" title="thinkphp2.x任意代码执行分析"><img class="post-bg" src="/img/tag.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="thinkphp2.x任意代码执行分析"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/03/thinkphp2-rce/" title="thinkphp2.x任意代码执行分析">thinkphp2.x任意代码执行分析</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-03T08:43:48.000Z" title="发表于 2023-11-03 16:43:48">2023-11-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">漏洞分析</a></span></div><div class="content">thinkphp2-rceindex.php使用了require包含了thinkphp文件夹下的thinkphp.php文件，执行了App类的run函数
+
+寻找App类的位置，因为包含了ThinkPHP文件，所以在ThinkPHP文件下寻找关于App类的代码
+
+在Thinkphp文件中发现又包含了&#x2F;Runtime&#x2F;~runtime.php
+在~runtime.php文件下找到了App类的run函数
+
+run函数执行init()函数
+
+init()执行中会引用 Dispatcher类的dispatch函数
+static public function dispatch()&#123;	$urlMode  =  C(&#x27;URL_MODEL&#x27;);	if($urlMode == URL_REWRITE ) &#123;		//当前项目地址		$url    =   dirname(_PHP_FILE_);		if($url == &#x27;/&#x27; || $url == &#x27;\\&#x27;)			$url    =   &#x27;&#x ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2023/11/03/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="php代码审计"><img class="post-bg" src="/img/shen.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="php代码审计"></a></div><div class="recent-post-info"><a class="article-title" href="/2023/11/03/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="php代码审计">php代码审计</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-03T08:31:44.000Z" title="发表于 2023-11-03 16:31:44">2023-11-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a></span></div><div class="content">php代码审计0x01环境搭建web服务器环境的软件有很多，使用最多的还是phpstudy以及宝塔面板，本文采用的是phpstudy。请注意，无论使用phpstudy还是宝塔面板，都需要按照网站源码的设计要求，修改环境配置，不然网站会搭建失败。
+0x02思路审计一个源码，最重要的是路由问题。一个功能点，如果找不到对应的功能代码，那审计的作用还有吗？
+当然，对于没有路由设置的源码，直接通过url找目录路径文件就可以了
+举个例子
+一个网站的登录接口为 http://127.0.0.1/admin/login.php ,那么对应的源码就在admin目录下的login.php内
+那如果使用了框架，情况就复杂起来了，需要了解这个源码使用框架的目录结构，thinkphp8.0框架的目录结构如下(源配置路径:https://doc.thinkphp.cn/v8_0/directory_structure.html)，接口函数基本上在app下的controller文件夹下
+www  WEB部署目录（或者子目录）├─app           应用目录│  ├─controller      控制器目录 ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ming</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XiaoMMing9"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XiaoMMing9" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/1544982906" target="_blank" title="Bilibili"><i class="fa-brands fa-bilibili" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to My blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/12/06/%E7%BC%96%E5%86%99shellcode%E7%9A%84%E9%80%BB%E8%BE%91/" title="编写shellcode的逻辑"><img src="/img/jian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编写shellcode的逻辑"/></a><div class="content"><a class="title" href="/2023/12/06/%E7%BC%96%E5%86%99shellcode%E7%9A%84%E9%80%BB%E8%BE%91/" title="编写shellcode的逻辑">编写shellcode的逻辑</a><time datetime="2023-12-06T08:33:04.000Z" title="发表于 2023-12-06 16:33:04">2023-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/06/pwn/" title="Xctf--pwnstack"><img src="/img/dong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Xctf--pwnstack"/></a><div class="content"><a class="title" href="/2023/12/06/pwn/" title="Xctf--pwnstack">Xctf--pwnstack</a><time datetime="2023-12-06T07:47:26.000Z" title="发表于 2023-12-06 15:47:26">2023-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/" title="红日靶场7"><img src="/img/red.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="红日靶场7"/></a><div class="content"><a class="title" href="/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/" title="红日靶场7">红日靶场7</a><time datetime="2023-11-23T10:02:13.000Z" title="发表于 2023-11-23 18:02:13">2023-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目"><img src="/img/picture.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一次CTF逆向题目"/></a><div class="content"><a class="title" href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目">一次CTF逆向题目</a><time datetime="2023-11-11T01:17:09.000Z" title="发表于 2023-11-11 09:17:09">2023-11-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/06/%E6%A0%85%E6%A0%8F%E5%8A%A0%E5%AF%86%E5%85%8D%E6%9D%80%E6%9C%A8%E9%A9%AC/" title="栅栏加密免杀木马"><img src="/img/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="栅栏加密免杀木马"/></a><div class="content"><a class="title" href="/2023/11/06/%E6%A0%85%E6%A0%8F%E5%8A%A0%E5%AF%86%E5%85%8D%E6%9D%80%E6%9C%A8%E9%A9%AC/" title="栅栏加密免杀木马">栅栏加密免杀木马</a><time datetime="2023-11-06T02:09:39.000Z" title="发表于 2023-11-06 10:09:39">2023-11-06</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%9C%A8%E9%A9%AC%E5%88%86%E6%9E%90/" style="font-size: 1.1em; color: #999">木马分析</a> <a href="/tags/%E5%85%8D%E6%9D%80/" style="font-size: 1.1em; color: #999">免杀</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 1.1em; color: #999">逆向</a> <a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" style="font-size: 1.1em; color: #999">内网渗透</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 1.1em; color: #999">代码审计</a> <a href="/tags/pwn/" style="font-size: 1.1em; color: #999">pwn</a> <a href="/tags/shellcode/" style="font-size: 1.1em; color: #999">shellcode</a> <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" style="font-size: 1.5em; color: #99a9bf">漏洞分析</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">7</span></a></li></ul></div></div></div></main><footer id="footer" style="background: url(/img/index1.jpg)"><div id="footer-wrap"><div class="copyright">&copy;2023 By ming</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: (str) => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: (subtitleType) => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["春风若有怜花意 &#44; 可否许我再少年"])
+  } else {
+    document.getElementById("subtitle").textContent = "春风若有怜花意 &#44; 可否许我再少年"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script src="/js/sakura.js"></script><div class="aplayer no-destroy" data-id="8853670988" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" > </div><script> function removelrc() {if (!document.querySelector(".aplayer-icon-lrc"))return; else{document.removeEventListener("DOMNodeInserted",removelrc);setTimeout(function() {document.querySelector(".aplayer-icon-lrc").click();}, 1);console.log("success");return;}}document.addEventListener('DOMNodeInserted', removelrc)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

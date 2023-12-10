@@ -1,0 +1,13 @@
+@font-face{
+    font-family: 'NiHeWoDeLangManYuZhou';
+    font-display: swap;
+    src: url('../font/NiHeWoDeLangManYuZhou-2.ttf') format("truetype");
+}
+@font-face{
+    font-family: 'NiHeWoDeLangManYuZhou';
+    font-display: swap;
+    src: url('../font/NiHeWoDeLangManYuZhou-2.ttf') format("truetype");
+}
+body {
+    font-family: 'NiHeWoDeLangManYuZhou','NiHeWoDeLangManYuZhou';
+}

